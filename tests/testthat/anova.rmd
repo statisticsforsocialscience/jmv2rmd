@@ -1,0 +1,30 @@
+---
+title: "Untitled"
+author: "André Calero Valdez"
+date: "12/15/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(jmv)
+library(jmv2rmd)
+```
+
+
+```{r}
+res <- ToothGrowth %>% jmv::ANOVA(dep=len, factors = c("supp", "dose"),
+                           effectSize = "eta", homo = T, 
+                  norm = T, qq = T, postHoc = ~ supp + dose,
+                  emMeans = Sepal.Length ~ supp + dose, 
+                  emmPlotData = T, emmTables = T)
+
+
+
+
+p <- jmv2rmd::anova_emm_plot(res, 2)
+
+p + ggplot2::labs(title = "Successfully extracted")
+```
+
